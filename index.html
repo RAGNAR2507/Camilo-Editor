@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juan Camilo Navia Castrillón · Editor de Video</title>
+  <meta name="description" content="Portafolio de Juan Camilo Navia Castrillón, editor de video enfocado en Reels, Shorts, TikTok y contenido narrativo para YouTube y redes sociales.">
+  <meta name="theme-color" content="#150f2e">
+
+  <!-- Favicon (SVG inline, sin archivos externos) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23241a45'/%3E%3Ctext x='50' y='64' font-family='Raleway, Arial, sans-serif' font-weight='800' font-size='46' fill='%23ff8c7a' text-anchor='middle'%3EJC%3C/text%3E%3C/svg%3E">
+
+  <!-- Tipografía -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <header class="site-header" id="siteHeader">
+    <nav class="navbar container">
+      <a href="#inicio" class="logo">JC<span>N</span></a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#inicio" class="nav-link">Inicio</a></li>
+        <li><a href="#perfil" class="nav-link">Perfil</a></li>
+        <li><a href="#portafolio" class="nav-link">Portafolio</a></li>
+        <li><a href="#contacto" class="nav-link nav-cta">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===== HERO / PRESENTACIÓN ===== -->
+    <section id="inicio" class="hero">
+      <div class="hero-bg-shapes" aria-hidden="true">
+        <div class="blob blob-purple"></div>
+        <div class="blob blob-salmon"></div>
+        <div class="grid-lines"></div>
+      </div>
+
+      <div class="container hero-content">
+        <p class="hero-eyebrow reveal">Editor de Video · Contenido Audiovisual</p>
+        <h1 class="reveal">
+          Juan Camilo<br>
+          <span class="text-gradient">Navia Castrillón</span>
+        </h1>
+        <p class="hero-subtitle reveal">
+          Contenido dinámico para YouTube, Shorts, Reels y TikTok — con ritmo narrativo,
+          retención de audiencia y adaptación a cada formato digital.
+        </p>
+        <div class="hero-actions reveal">
+          <a href="#portafolio" class="btn btn-primary">Ver portafolio</a>
+          <a href="#contacto" class="btn btn-outline">Contactar</a>
+        </div>
+      </div>
+
+      <a href="#perfil" class="scroll-indicator" aria-label="Desplazarse hacia la siguiente sección">
+        <span></span>
+      </a>
+    </section>
+
+    <!-- ===== PERFIL ===== -->
+    <section id="perfil" class="about">
+      <div class="container about-grid">
+        <div class="about-visual reveal">
+          <div class="about-frame">
+            <div class="about-blob"></div>
+            <span class="about-initials">JCN</span>
+          </div>
+        </div>
+
+        <div class="about-text">
+          <span class="section-tag reveal">Perfil</span>
+          <h2 class="reveal">Sobre mí</h2>
+
+          <p class="reveal">
+            Editor de video enfocado en contenido para <strong>YouTube, Shorts, Reels, TikTok</strong> y
+            plataformas de streaming. Actualmente trabajo en proyectos personales relacionados con
+            creación de contenido, edición de clips, contenido narrativo y formatos audiovisuales
+            para redes sociales.
+          </p>
+          <p class="reveal">
+            Me interesa crear contenido dinámico, con ritmo narrativo, retención de audiencia y
+            adaptación a diferentes formatos digitales. Busco seguir ganando experiencia práctica
+            mientras colaboro en proyectos que me permitan aportar valor y fortalecer mi portafolio.
+          </p>
+          <p class="reveal">
+            Además de mi interés en la producción audiovisual, tengo formación en ingeniería y
+            conocimientos de <strong>Python</strong>, <strong>bases de datos</strong> y
+            <strong>automatización</strong>, lo que me ha permitido desarrollar una metodología de
+            trabajo organizada, analítica y enfocada en la resolución de problemas.
+          </p>
+          <p class="reveal">
+            Opcionalmente, utilizo herramientas de IA como <strong>Claude</strong> e
+            <strong>Hyperframe</strong> para apoyar procesos de edición y optimización de contenido.
+          </p>
+
+          <div class="skills reveal">
+            <span class="skill-chip">Edición de video</span>
+            <span class="skill-chip">Storytelling</span>
+            <span class="skill-chip">Python</span>
+            <span class="skill-chip">Bases de datos</span>
+            <span class="skill-chip">Automatización</span>
+            <span class="skill-chip">IA · Claude</span>
+            <span class="skill-chip">Hyperframe</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PORTAFOLIO ===== -->
+    <section id="portafolio" class="portfolio">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="section-tag">Portafolio</span>
+          <h2>Trabajos y proyectos</h2>
+          <p class="section-intro">
+            Una selección de piezas organizadas por categoría. Nuevas categorías y proyectos se irán
+            sumando a medida que avancen los trabajos.
+          </p>
+        </div>
+
+        <div class="portfolio-filters reveal" id="portfolioFilters">
+          <!-- Los botones de filtro se generan dinámicamente desde script.js -->
+        </div>
+
+        <div id="portfolioCategories"><!-- Categorías y tarjetas generadas por script.js --></div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACTO ===== -->
+    <section id="contacto" class="contact">
+      <div class="container contact-grid">
+        <div class="contact-info reveal">
+          <span class="section-tag">Contacto</span>
+          <h2>Hablemos de tu próximo proyecto</h2>
+          <p>
+            ¿Tienes un proyecto de video en mente? Escríbeme o llámame y conversemos sobre cómo darle
+            forma y ritmo a tu contenido.
+          </p>
+        </div>
+
+        <div class="contact-actions reveal">
+          <a href="tel:+573213275783" class="contact-card">
+            <span class="contact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1L6.6 10.8z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="contact-text">
+              <span class="contact-label">Teléfono</span>
+              <span class="contact-value">+57 321 327 5783</span>
+            </span>
+          </a>
+
+          <a href="mailto:camilojuan197@gmail.com" class="contact-card">
+            <span class="contact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 6.5C3 5.7 3.7 5 4.5 5h15c.8 0 1.5.7 1.5 1.5v11c0 .8-.7 1.5-1.5 1.5h-15A1.5 1.5 0 013 17.5v-11z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M4 6.5l8 6.2 8-6.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="contact-text">
+              <span class="contact-label">Correo electrónico</span>
+              <span class="contact-value">camilojuan197@gmail.com</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <p>&copy; <span id="year"></span> Juan Camilo Navia Castrillón. Todos los derechos reservados.</p>
+      <a href="#inicio" class="back-to-top" aria-label="Volver arriba">↑</a>
+    </div>
+  </footer>
+
+  <!-- ===== MODAL DE VIDEO ===== -->
+  <div class="modal" id="videoModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-content">
+      <button class="modal-close" data-close aria-label="Cerrar video">&times;</button>
+      <div class="modal-video" id="modalVideo"></div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
