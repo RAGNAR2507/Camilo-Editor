@@ -73,7 +73,15 @@
         <div class="about-visual reveal">
           <div class="about-frame">
             <div class="about-blob"></div>
-            <span class="about-initials">JCN</span>
+            <div class="about-photo-circle">
+              <img
+                src="assets/img/perfil.jpg"
+                alt="Juan Camilo Navia Castrillón"
+                class="about-photo"
+                onerror="this.remove(); document.getElementById('aboutFallback').style.display='flex';"
+              >
+              <span class="about-fallback" id="aboutFallback">JCN</span>
+            </div>
           </div>
         </div>
 
@@ -93,24 +101,28 @@
             mientras colaboro en proyectos que me permitan aportar valor y fortalecer mi portafolio.
           </p>
           <p class="reveal">
-            Además de mi interés en la producción audiovisual, tengo formación en ingeniería y
-            conocimientos de <strong>Python</strong>, <strong>bases de datos</strong> y
-            <strong>automatización</strong>, lo que me ha permitido desarrollar una metodología de
-            trabajo organizada, analítica y enfocada en la resolución de problemas.
+            Mi flujo de post-producción incluye edición y corrección de color en
+            <strong>DaVinci Resolve</strong>, <strong>motion graphics</strong> para reforzar el
+            storytelling visual, y corrección de sonido para lograr una entrega con calidad
+            profesional.
           </p>
           <p class="reveal">
-            Opcionalmente, utilizo herramientas de IA como <strong>Claude</strong> e
-            <strong>Hyperframe</strong> para apoyar procesos de edición y optimización de contenido.
+            Además, cuento con formación en ingeniería, lo que aporta a mi trabajo una metodología
+            organizada y analítica, y ocasionalmente incorporo herramientas de
+            <strong>inteligencia artificial (AI)</strong> para apoyar procesos de edición y
+            optimización de contenido.
           </p>
 
           <div class="skills reveal">
             <span class="skill-chip">Edición de video</span>
+            <span class="skill-chip">DaVinci Resolve</span>
+            <span class="skill-chip">Motion Graphics</span>
+            <span class="skill-chip">Corrección de sonido</span>
+            <span class="skill-chip">Corrección de color</span>
+            <span class="skill-chip">AI</span>
             <span class="skill-chip">Storytelling</span>
-            <span class="skill-chip">Python</span>
-            <span class="skill-chip">Bases de datos</span>
-            <span class="skill-chip">Automatización</span>
-            <span class="skill-chip">IA · Claude</span>
-            <span class="skill-chip">Hyperframe</span>
+            <span class="skill-chip">Reels</span>
+            <span class="skill-chip">Documentales</span>
           </div>
         </div>
       </div>
@@ -149,14 +161,19 @@
         </div>
 
         <div class="contact-actions reveal">
-          <a href="tel:+573213275783" class="contact-card">
+          <a
+            href="https://wa.me/573213275783?text=Hola%20Juan%20Camilo%2C%20quiero%20hablar%20sobre%20un%20proyecto%20de%20edici%C3%B3n%20de%20video."
+            class="contact-card"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <span class="contact-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1L6.6 10.8z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.393.703 4.617 1.912 6.487L4 29l7.694-1.879A11.94 11.94 0 0016.001 27C22.628 27 28 21.627 28 15S22.628 3 16.001 3zm0 21.75c-1.925 0-3.732-.548-5.262-1.494l-.377-.226-4.564 1.115 1.144-4.454-.246-.396A9.71 9.71 0 016.25 15c0-5.376 4.375-9.75 9.751-9.75S25.75 9.624 25.75 15 21.377 24.75 16.001 24.75zm5.336-7.264c-.293-.147-1.73-.854-1.998-.951-.268-.098-.463-.147-.658.147-.195.293-.756.951-.927 1.146-.171.195-.342.22-.635.073-.293-.147-1.235-.455-2.352-1.451-.869-.775-1.456-1.732-1.627-2.025-.171-.293-.018-.451.129-.598.133-.132.293-.342.44-.513.147-.171.195-.293.293-.488.098-.195.049-.366-.024-.513-.073-.147-.658-1.586-.902-2.173-.238-.571-.48-.494-.658-.503l-.561-.01c-.195 0-.513.073-.782.366-.269.293-1.025 1.002-1.025 2.443 0 1.44 1.05 2.834 1.196 3.03.146.195 2.066 3.155 5.008 4.425.7.302 1.246.483 1.672.618.702.223 1.341.191 1.846.116.563-.084 1.73-.707 1.973-1.39.244-.684.244-1.27.171-1.39-.073-.122-.268-.195-.561-.342z"/>
               </svg>
             </span>
             <span class="contact-text">
-              <span class="contact-label">Teléfono</span>
+              <span class="contact-label">WhatsApp</span>
               <span class="contact-value">+57 321 327 5783</span>
             </span>
           </a>

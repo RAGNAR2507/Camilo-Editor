@@ -7,18 +7,18 @@
      arreglo "categories" y ajústalo. Para agregar un video,
      copia un objeto dentro de "videos".
      - embed: URL de YouTube/Vimeo (déjalo vacío "" si aún no hay video)
-     - thumbnail: URL de una imagen de portada (opcional)
+     - thumbnail: URL de una imagen de portada (opcional). Para YouTube puedes
+       dejarlo vacío o pegar el mismo link que en "embed": la miniatura oficial
+       se genera sola.
      - orientation: "portrait" (Reels/Shorts) o "landscape" (narrativos)
      ========================================================= */
   const categories = [
     {
-      id: 'reels',
-      title: 'Reels',
-      description: 'Videos cortos y dinámicos diseñados para captar la atención en segundos, optimizados para Instagram, TikTok y YouTube Shorts.',
+      id: 'dinamicos',
+      title: 'Videos dinámicos',
+      description: 'Ediciones ágiles con ritmo acelerado, cortes rápidos y transiciones dinámicas, pensadas para captar la atención en segundos en redes sociales y contenido publicitario.',
       videos: [
-        { title: 'Reel de ejemplo 1', tag: 'Instagram', orientation: 'portrait', embed: '', thumbnail: '' },
-        { title: 'Reel de ejemplo 2', tag: 'TikTok', orientation: 'portrait', embed: '', thumbnail: '' },
-        { title: 'Reel de ejemplo 3', tag: 'YouTube Shorts', orientation: 'portrait', embed: '', thumbnail: '' }
+        { title: 'Así edito mis videos', tag: 'Publicidad', orientation: 'landscape', embed: 'https://youtu.be/gMqMnTWsiio?si=JRTznDsGsRYpDGVN', thumbnail: 'https://youtu.be/gMqMnTWsiio?si=JRTznDsGsRYpDGVN' }
       ]
     },
     {
@@ -26,8 +26,7 @@
       title: 'Videos narrativos',
       description: 'Producciones con ritmo narrativo, pensadas para mantener la atención del espectador y transmitir mensajes claros en formatos más largos.',
       videos: [
-        { title: 'Proyecto narrativo 1', tag: 'YouTube', orientation: 'landscape', embed: '', thumbnail: '' },
-        { title: 'Proyecto narrativo 2', tag: 'Documental', orientation: 'landscape', embed: '', thumbnail: '' }
+        { title: 'Introspección de un rodaje', tag: 'Mini documental', orientation: 'landscape', embed: 'https://youtu.be/HvZB4duQxyM?si=-sdYFZnEhtfPqyg2', thumbnail: 'https://youtu.be/HvZB4duQxyM?si=-sdYFZnEhtfPqyg2' }
       ]
     }
     // Agrega aquí nuevas categorías siguiendo el mismo formato.
@@ -36,13 +35,25 @@
   const playIconSVG = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
 
   /* ---------- Utilidades ---------- */
+  function extractYouTubeId(url) {
+    if (!url) return null;
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+    return match ? match[1] : null;
+  }
+
   function toEmbedUrl(url) {
     if (!url) return '';
-    const yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]{11})/);
-    if (yt) return `https://www.youtube.com/embed/${yt[1]}?autoplay=1&rel=0`;
+    const ytId = extractYouTubeId(url);
+    if (ytId) return `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`;
     const vimeo = url.match(/vimeo\.com\/(\d+)/);
     if (vimeo) return `https://player.vimeo.com/video/${vimeo[1]}?autoplay=1`;
     return url;
+  }
+
+  function resolveThumbnail(video) {
+    const ytId = extractYouTubeId(video.thumbnail) || extractYouTubeId(video.embed);
+    if (ytId) return `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+    return video.thumbnail || '';
   }
 
   /* ---------- Render del portafolio ---------- */
@@ -58,12 +69,14 @@
 
     categoriesEl.innerHTML = categories.map(cat => `
       <div class="portfolio-category" data-category="${cat.id}">
-        <div class="category-header">
-          <h3>${cat.title}</h3>
-          <p>${cat.description}</p>
-        </div>
-        <div class="portfolio-grid">
-          ${cat.videos.map(v => renderVideoCard(v, cat.id)).join('')}
+        <div class="portfolio-category-inner">
+          <div class="category-header">
+            <h3>${cat.title}</h3>
+            <p>${cat.description}</p>
+          </div>
+          <div class="portfolio-grid">
+            ${cat.videos.map(v => renderVideoCard(v, cat.id)).join('')}
+          </div>
         </div>
       </div>
     `).join('');
@@ -78,8 +91,9 @@
   }
 
   function renderVideoCard(video, categoryId) {
-    const thumb = video.thumbnail
-      ? `<img src="${video.thumbnail}" alt="${video.title}" loading="lazy">`
+    const thumbnailUrl = resolveThumbnail(video);
+    const thumb = thumbnailUrl
+      ? `<img src="${thumbnailUrl}" alt="${video.title}" loading="lazy">`
       : '';
     return `
       <article class="video-card" data-category="${categoryId}" data-embed="${video.embed || ''}" data-orientation="${video.orientation || 'portrait'}" tabindex="0" role="button" aria-label="Reproducir ${video.title}">
@@ -99,7 +113,8 @@
   function applyFilter(filter) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
     document.querySelectorAll('.portfolio-category').forEach(block => {
-      block.style.display = (filter === 'all' || block.dataset.category === filter) ? '' : 'none';
+      const show = filter === 'all' || block.dataset.category === filter;
+      block.classList.toggle('is-hidden', !show);
     });
   }
 
@@ -144,6 +159,18 @@
     toast.classList.add('show');
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+  }
+
+  /* ---------- Contacto por correo ---------- */
+  const emailCard = document.querySelector('.contact-card[href^="mailto:"]');
+  if (emailCard) {
+    emailCard.addEventListener('click', () => {
+      const email = emailCard.getAttribute('href').replace('mailto:', '').split('?')[0];
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(email).catch(() => {});
+      }
+      showToast(`Correo copiado: ${email}`);
+    });
   }
 
   /* ---------- Navegación móvil ---------- */
