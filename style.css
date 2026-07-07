@@ -521,6 +521,29 @@ img { max-width: 100%; display: block; }
   opacity: 1;
 }
 
+.portfolio-filters-tags {
+  margin-top: -2.2rem;
+  margin-bottom: 3.5rem;
+}
+.portfolio-filters-tags.is-empty {
+  display: none;
+}
+.filter-btn-tag {
+  padding: 6px 18px;
+  font-size: 0.8rem;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--muted-dim);
+}
+.filter-btn-tag::before {
+  background: linear-gradient(120deg, var(--salmon-500), var(--purple-400));
+}
+.filter-btn-tag:hover {
+  border-color: var(--salmon-500);
+}
+.filter-btn-tag.active {
+  box-shadow: 0 8px 20px -10px rgba(255, 140, 122, 0.5);
+}
+
 .portfolio-category {
   display: grid;
   grid-template-rows: 1fr;
@@ -623,11 +646,17 @@ img { max-width: 100%; display: block; }
 }
 .play-icon svg { width: 20px; height: 20px; fill: var(--light-100); }
 
-.video-badge {
+.video-badges {
   position: absolute;
   top: 12px;
   left: 12px;
+  right: 12px;
   z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.video-badge {
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.04em;

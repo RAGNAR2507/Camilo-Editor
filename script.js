@@ -11,6 +11,8 @@
        dejarlo vacío o pegar el mismo link que en "embed": la miniatura oficial
        se genera sola.
      - orientation: "portrait" (Reels/Shorts) o "landscape" (narrativos)
+     - tags: arreglo de etiquetas del video (puedes poner una o varias),
+       por ejemplo: tags: ['Publicidad', 'Motion Graphics']
      ========================================================= */
   const categories = [
     {
@@ -18,7 +20,7 @@
       title: 'Videos dinámicos',
       description: 'Ediciones ágiles con ritmo acelerado, cortes rápidos y transiciones dinámicas, pensadas para captar la atención en segundos en redes sociales y contenido publicitario.',
       videos: [
-        { title: 'Así edito mis videos', tag: 'Publicidad', orientation: 'landscape', embed: 'https://youtu.be/gMqMnTWsiio?si=JRTznDsGsRYpDGVN', thumbnail: 'https://youtu.be/gMqMnTWsiio?si=JRTznDsGsRYpDGVN' }
+        { title: 'Así edito mis videos', tags: ['Publicidad'], orientation: 'landscape', embed: 'https://youtu.be/gMqMnTWsiio?si=JRTznDsGsRYpDGVN', thumbnail: 'https://youtu.be/gMqMnTWsiio?si=JRTznDsGsRYpDGVN' }
       ]
     },
     {
@@ -26,11 +28,29 @@
       title: 'Videos narrativos',
       description: 'Producciones con ritmo narrativo, pensadas para mantener la atención del espectador y transmitir mensajes claros en formatos más largos.',
       videos: [
-        { title: 'Introspección de un rodaje', tag: 'Mini documental', orientation: 'landscape', embed: 'https://youtu.be/HvZB4duQxyM?si=-sdYFZnEhtfPqyg2', thumbnail: 'https://youtu.be/HvZB4duQxyM?si=-sdYFZnEhtfPqyg2' }
+        { title: 'Introspección de un rodaje', tags: ['Mini documental', 'Ficción', 'Cine'], orientation: 'landscape', embed: 'https://youtu.be/HvZB4duQxyM?si=-sdYFZnEhtfPqyg2', thumbnail: 'https://youtu.be/HvZB4duQxyM?si=-sdYFZnEhtfPqyg2' }
+      ]
+    },
+    {
+      id: 'crecimiento',
+      title: 'Videos de crecimiento personal',
+      description: 'Producciones con ritmo entretenido pero serio, pensadas en comunicar contenido de alto valor y al mismo tiempo manteniendo la retención',
+      videos: [
+        { title: 'La dieta más fácil del mundo para eliminar grasa visceral', tags: ['Salud', 'Alimentación', 'Emprendimiento', 'Uso de IA'], orientation: 'landscape', embed: 'https://youtu.be/SlgukfstmI0', thumbnail: 'https://youtu.be/SlgukfstmI0' }
       ]
     }
     // Agrega aquí nuevas categorías siguiendo el mismo formato.
   ];
+
+  /* ---------- Estado de filtros ---------- */
+  const filterState = { category: 'all', tag: 'all' };
+
+  function getTagsForCategory(categoryId) {
+    const relevant = categoryId === 'all' ? categories : categories.filter(c => c.id === categoryId);
+    const tagSet = new Set();
+    relevant.forEach(c => c.videos.forEach(v => (v.tags || []).forEach(t => tagSet.add(t))));
+    return Array.from(tagSet);
+  }
 
   const playIconSVG = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
 
@@ -82,12 +102,14 @@
     `).join('');
 
     filtersEl.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
+      btn.addEventListener('click', () => setCategoryFilter(btn.dataset.filter));
     });
 
     categoriesEl.querySelectorAll('.video-card').forEach(card => {
       card.addEventListener('click', () => onVideoCardClick(card));
     });
+
+    renderTagFilters();
   }
 
   function renderVideoCard(video, categoryId) {
@@ -95,26 +117,74 @@
     const thumb = thumbnailUrl
       ? `<img src="${thumbnailUrl}" alt="${video.title}" loading="lazy">`
       : '';
+    const tags = video.tags || [];
+    const badges = tags.map(t => `<span class="video-badge">${t}</span>`).join('');
     return `
-      <article class="video-card" data-category="${categoryId}" data-embed="${video.embed || ''}" data-orientation="${video.orientation || 'portrait'}" tabindex="0" role="button" aria-label="Reproducir ${video.title}">
+      <article class="video-card" data-category="${categoryId}" data-tags="${tags.join('|')}" data-embed="${video.embed || ''}" data-orientation="${video.orientation || 'portrait'}" tabindex="0" role="button" aria-label="Reproducir ${video.title}">
         <div class="video-thumb">
-          <span class="video-badge">${video.tag || ''}</span>
+          <div class="video-badges">${badges}</div>
           ${thumb}
           <span class="play-icon">${playIconSVG}</span>
         </div>
         <div class="video-info">
           <h4>${video.title}</h4>
-          <span>${video.tag || ''}</span>
+          <span>${tags.join(' · ')}</span>
         </div>
       </article>
     `;
   }
 
-  function applyFilter(filter) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
+  /* ---------- Filtro por tipo (categoría) + filtro por etiqueta ---------- */
+  function setCategoryFilter(categoryId) {
+    filterState.category = categoryId;
+    filterState.tag = 'all';
+    document.querySelectorAll('#portfolioFilters .filter-btn')
+      .forEach(b => b.classList.toggle('active', b.dataset.filter === categoryId));
+    renderTagFilters();
+    applyFilters();
+  }
+
+  function setTagFilter(tag) {
+    filterState.tag = tag;
+    document.querySelectorAll('#portfolioTagFilters .filter-btn')
+      .forEach(b => b.classList.toggle('active', b.dataset.tag === tag));
+    applyFilters();
+  }
+
+  function renderTagFilters() {
+    const tagFiltersEl = document.getElementById('portfolioTagFilters');
+    if (!tagFiltersEl) return;
+
+    const tags = getTagsForCategory(filterState.category);
+    if (tags.length === 0) {
+      tagFiltersEl.innerHTML = '';
+      tagFiltersEl.classList.add('is-empty');
+      return;
+    }
+    tagFiltersEl.classList.remove('is-empty');
+
+    const tagButtons = [{ id: 'all', title: 'Todas las etiquetas' }, ...tags.map(t => ({ id: t, title: t }))];
+    tagFiltersEl.innerHTML = tagButtons
+      .map(t => `<button class="filter-btn filter-btn-tag${t.id === filterState.tag ? ' active' : ''}" data-tag="${t.id}">${t.title}</button>`)
+      .join('');
+
+    tagFiltersEl.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => setTagFilter(btn.dataset.tag));
+    });
+  }
+
+  function applyFilters() {
     document.querySelectorAll('.portfolio-category').forEach(block => {
-      const show = filter === 'all' || block.dataset.category === filter;
-      block.classList.toggle('is-hidden', !show);
+      const categoryMatches = filterState.category === 'all' || block.dataset.category === filterState.category;
+      let anyVisible = false;
+      block.querySelectorAll('.video-card').forEach(card => {
+        const cardTags = (card.dataset.tags || '').split('|').filter(Boolean);
+        const tagMatches = filterState.tag === 'all' || cardTags.includes(filterState.tag);
+        const visible = categoryMatches && tagMatches;
+        card.classList.toggle('hidden', !visible);
+        if (visible) anyVisible = true;
+      });
+      block.classList.toggle('is-hidden', !anyVisible);
     });
   }
 
